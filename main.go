@@ -108,6 +108,10 @@ func main() {
 		log.Println(cli.BgRed, "config", cli.Reset, err)
 	}
 
+	for a, b := range c.RawCmdArgs {
+		log.Printf(`Raw Arg%d: %s`, a+1, b)
+	}
+
 	openid.Configure()
 
 	server.RunBlocking(&server.RunConfig{
