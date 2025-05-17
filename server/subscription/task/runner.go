@@ -134,6 +134,10 @@ func (t *CronTaskRunner) fetcher(ctx context.Context, req *monitorTask) time.Dur
 		req.Subscription.URL,
 	)
 
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
+
 	stdout, err := cmd.Output()
 	if err != nil {
 		t.errors <- err

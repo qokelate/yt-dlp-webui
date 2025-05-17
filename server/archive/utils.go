@@ -21,6 +21,9 @@ func DownloadExists(ctx context.Context, url string) (bool, error) {
 		"%(extractor)s %(id)s",
 		url,
 	)
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
 	stdout, err := cmd.Output()
 	if err != nil {
 		return false, err

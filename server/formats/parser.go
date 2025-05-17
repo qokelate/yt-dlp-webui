@@ -12,6 +12,10 @@ import (
 func ParseURL(url string) (*Metadata, error) {
 	cmd := exec.Command(config.Instance().DownloaderPath, url, "-J")
 
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
+
 	stdout, err := cmd.Output()
 	if err != nil {
 		slog.Error("failed to retrieve metadata", slog.String("err", err.Error()))

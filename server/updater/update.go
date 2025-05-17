@@ -10,6 +10,10 @@ import (
 func UpdateExecutable() error {
 	cmd := exec.Command(config.Instance().DownloaderPath, "-U")
 
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
+
 	err := cmd.Start()
 	if err != nil {
 		return err

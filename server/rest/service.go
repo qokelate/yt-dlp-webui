@@ -172,6 +172,11 @@ func (s *Service) GetVersion(ctx context.Context) (string, string, error) {
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, config.Instance().DownloaderPath, "--version")
+
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
+
 	go func() {
 		stdout, _ := cmd.Output()
 		result <- string(stdout)

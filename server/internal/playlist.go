@@ -23,6 +23,10 @@ func PlaylistDetect(req DownloadRequest, mq *MessageQueue, db *MemoryDB) error {
 		cmd        = exec.Command(downloader, urlWithParams...)
 	)
 
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
+
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		return err

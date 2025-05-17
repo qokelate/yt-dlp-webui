@@ -115,6 +115,10 @@ func (p *Process) Start() {
 	cmd := exec.Command(config.Instance().DownloaderPath, params...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
+
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		slog.Error("failed to get a stdout pipe", slog.Any("err", err))
@@ -292,6 +296,10 @@ func (p *Process) GetFileName(o *DownloadOutput) error {
 	)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
+
 	out, err := cmd.Output()
 	if err != nil {
 		return err
@@ -314,6 +322,10 @@ func (p *Process) SetPending() {
 func (p *Process) SetMetadata() error {
 	cmd := exec.Command(config.Instance().DownloaderPath, p.Url, "-J")
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+
+	if len(config.Instance().RawCmdArgs) > 0 {
+		cmd.Args = append(cmd.Args, config.Instance().RawCmdArgs...)
+	}
 
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {

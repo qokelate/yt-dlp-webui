@@ -31,6 +31,7 @@ type Config struct {
 	OpenIdEmailWhitelist []string `yaml:"openid_email_whitelist"`
 	FrontendPath         string   `yaml:"frontend_path"`
 	AutoArchive          bool     `yaml:"auto_archive"`
+	RawCmdArgs           []string `yaml:"raw_cmd_args"`
 }
 
 var (
